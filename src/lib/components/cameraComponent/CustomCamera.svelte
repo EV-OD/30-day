@@ -14,6 +14,7 @@
         intialPos: Vector3;
         finalPos: Vector3;
         func: ((t: number) => number) | undefined;
+        resolve?: () => void;
     };
 
     export type AnimationLookAtStore = {
@@ -24,6 +25,7 @@
         intialLookAt: Vector3;
         finalLookAt: Vector3;
         func: ((t: number) => number) | undefined;
+        resolve?: () => void;
     };
 </script>
 
@@ -34,10 +36,8 @@
     import { spring, tweened } from 'svelte/motion';
     import { SpotLight, DirectionalLight, PointLight, Vector3, PerspectiveCamera } from 'three';
 
-    export let isOrbitControEnabled = false;
-    export let zoom = 1;
     export let cameraPos = new Vector3(0, 0, 0);
-    export let cameraLookAt = new Vector3(0, 0, 0);
+    export let cameraLookAt = new Vector3(0, 10, 0);
 
     export let cameraRef: PerspectiveCamera;
 
@@ -61,84 +61,92 @@
     };
 
     export const animateCameraPos = (pos: Vector3, options: AnimationOpts) => {
-        isPosAnimation = {
-            isAnimating: true,
-            duration: options.duration && options.duration > 0 ? options.duration : 1000,
-            delay: options.delay && options.delay > 0 ? options.delay : 0,
-            easing: options.easing ? options.easing : linear,
-            intialPos: cameraPos.clone(),
-            finalPos: pos,
-            func: options.func
-        };
+        return new Promise<void>((resolve) => {
+            isPosAnimation = {
+                isAnimating: true,
+                duration: options.duration && options.duration > 0 ? options.duration : 1000,
+                delay: options.delay && options.delay > 0 ? options.delay : 0,
+                easing: options.easing ? options.easing : linear,
+                intialPos: cameraPos.clone(),
+                finalPos: pos,
+                func: options.func,
+                resolve
+            };
+        });
     };
 
     export const animateCameraLookAt = (lookAt: Vector3, options: AnimationOpts) => {
-        isLookAtAnimation = {
-            isAnimating: true,
-            duration: options.duration && options.duration > 0 ? options.duration : 1000,
-            delay: options.delay && options.delay > 0 ? options.delay : 0,
-            easing: options.easing ? options.easing : linear,
-            intialLookAt: cameraRef.position.clone(),
-            finalLookAt: lookAt,
-            func: options.func
-        };
+        return new Promise<void>((resolve) => {
+            isLookAtAnimation = {
+                isAnimating: true,
+                duration: options.duration && options.duration > 0 ? options.duration : 1000,
+                delay: options.delay && options.delay > 0 ? options.delay : 0,
+                easing: options.easing ? options.easing : linear,
+                intialLookAt: cameraLookAt.clone(),
+                finalLookAt: lookAt,
+                func: options.func,
+                resolve
+            };
+        });
     };
 
     let animationStartTime: number | null = null;
 
     useTask((delta) => {
-    if (isPosAnimation.isAnimating) {
-        const { duration, delay, easing, intialPos, finalPos, func } = isPosAnimation;
+        if (isPosAnimation.isAnimating) {
+            const { duration, delay, easing, intialPos, finalPos, func, resolve } = isPosAnimation;
 
-        if (animationStartTime === null) {
-            animationStartTime = performance.now();
+            if (animationStartTime === null) {
+                animationStartTime = performance.now();
+            }
+
+            let elapsedTime = performance.now() - animationStartTime - delay;
+            if (elapsedTime < 0) return;
+
+            const t = Math.min(elapsedTime / duration, 1);
+            const easedT = easing(t);
+
+            if (t <= 1) {
+                const newPos = new Vector3().lerpVectors(intialPos, finalPos, easedT);
+                cameraPos = newPos;
+                if (func) func(easedT);
+            } else {
+                cameraPos = finalPos.clone();
+                isPosAnimation.isAnimating = false;
+                animationStartTime = null;
+                if (resolve) resolve();
+            }
         }
 
-        let elapsedTime = performance.now() - animationStartTime - delay;
-        if (elapsedTime < 0) return;
+        if (isLookAtAnimation.isAnimating) {
+            console.log('isLookAtAnimation');
+            const { duration, delay, easing, intialLookAt, finalLookAt, func, resolve } = isLookAtAnimation;
 
-        const t = Math.min(elapsedTime / duration, 1);
-        const easedT = easing(t);
+            if (animationStartTime === null) {
+                animationStartTime = performance.now();
+            }
 
-        if (t <= 1) {
-            const newPos = new Vector3().lerpVectors(intialPos, finalPos, easedT);
-            cameraPos = newPos;
-            console.table({ cameraPos, finalPos, t });
-            if (func) func(easedT);
-        } else {
-            cameraPos = finalPos.clone();
-            isPosAnimation.isAnimating = false;
-            console.table({type:"end", cameraPos, finalPos, t });
-            animationStartTime = null;
+            let elapsedTime = performance.now() - animationStartTime - delay;
+            if (elapsedTime < 0) return;
+
+            const t = Math.min(elapsedTime / duration, 1);
+            const easedT = easing(t);
+
+            if (t < 1) {
+                const newLookAt = new Vector3().lerpVectors(intialLookAt, finalLookAt, easedT);
+                cameraRef.lookAt(newLookAt);
+                console.table({ newLookAt, intialLookAt, finalLookAt, easedT });
+                
+                if (func) func(easedT);
+            } else {
+                console.table({ finalLookAt });
+                cameraRef.lookAt(finalLookAt.clone());
+                isLookAtAnimation.isAnimating = false;
+                animationStartTime = null;
+                if (resolve) resolve();
+            }
         }
-    }
-
-    if (isLookAtAnimation.isAnimating) {
-        const { duration, delay, easing, intialLookAt, finalLookAt, func } = isLookAtAnimation;
-
-        if (animationStartTime === null) {
-            animationStartTime = performance.now();
-        }
-
-        let elapsedTime = performance.now() - animationStartTime - delay;
-        if (elapsedTime < 0) return;
-
-        const t = Math.min(elapsedTime / duration, 1);
-        const easedT = easing(t);
-
-        if (t <= 1) {
-            const newLookAt = new Vector3().lerpVectors(intialLookAt, finalLookAt, easedT);
-            cameraRef.lookAt(newLookAt);
-            
-            if (func) func(easedT);
-        } else {
-            cameraRef.lookAt(finalLookAt.clone());
-            isLookAtAnimation.isAnimating = false;
-            animationStartTime = null;
-        }
-    }
-});
-
+    });
 </script>
 
 <T.Group position={cameraPos.toArray()}>
@@ -150,9 +158,5 @@
             cameraRef = ref;
             cameraRef.lookAt(cameraLookAt);
         }}
-    >
-        {#if isOrbitControEnabled}
-            <OrbitControls {zoom} enableZoom={true} enableDamping />
-        {/if}
-    </T.PerspectiveCamera>
+    />
 </T.Group>
