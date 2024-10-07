@@ -8,7 +8,10 @@
 <T.PerspectiveCamera makeDefault position={[14, 14, 14]} fov={15}>
 	<OrbitControls enableZoom={false} enableDamping />
 </T.PerspectiveCamera>
-<T.AmbientLight intensity={1} />
+<T.AmbientLight intensity={0.5} />
+<T.DirectionalLight position={[10, 10, 5]} intensity={1} />
+
+
 
 <T.Mesh position={[0, 0, 0]} rotation.x={Math.PI / -2} castShadow receiveShadow>
 	<T.PlaneGeometry args={[100, 100]} />
@@ -17,9 +20,8 @@
 
 <T.Mesh>
     <T.BoxGeometry args={[1, 1, 1]} />
-    <T.MeshBasicMaterial color={getRandomColor()} />
+    <T.MeshLambertMaterial color={getRandomColor()} />
 </T.Mesh>
-
 
 
 
