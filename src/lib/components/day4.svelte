@@ -19,6 +19,7 @@
 
 	import CustomCamera, {type AnimationOpts} from './cameraComponent/CustomCamera.svelte';
 
+	// other codes ....
 	let cameraRef: PerspectiveCamera;
 	let animateCameraPos:((pos: Vector3, options: AnimationOpts) => Promise<void>) | undefined
 	let animateCameraLookAt:((pos: Vector3, options: AnimationOpts) => Promise<void>) | undefined
@@ -29,8 +30,8 @@
 	}
 	async function runAnimation(){
 		if(animateCameraPos && animateCameraLookAt){
-			let x = await animateCameraLookAt(new Vector3(0, 0, 0), {duration: 1000, easing: cubicOut})
-			animateCameraPos(new Vector3(-10, 10, -40), {duration: 3000, delay:1000,func: function(t:number){
+			let x = await animateCameraLookAt(new Vector3(0, 0, 0), {delay:500, duration: 2000, easing: cubicOut})
+			animateCameraPos(new Vector3(-10, 10, -40), {duration: 3000,func: function(t:number){
 				if(cameraRef){
 					cameraRef.lookAt(0, 0, 0)
 				}
@@ -47,6 +48,8 @@ cameraLookAt={new Vector3(0, 10, 0)}
 bind:animateCameraPos
 bind:animateCameraLookAt
 />
+
+<!-- other codes -->
 
 <T.Mesh position={[-1, 1, 0]} castShadow receiveShadow>
 	<T.BoxGeometry args={[1, 1, 1]} />
