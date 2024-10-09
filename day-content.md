@@ -9,3 +9,4 @@
     + 3. Phong Material
     + 4. Meshline Material
     + 5. Toon Material
++ Day 6 = bubbling effect

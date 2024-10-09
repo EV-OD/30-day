@@ -92,6 +92,8 @@
 <T.AmbientLight intensity={0.1} />
 
 <T.DirectionalLight position={[0, 0, 10]} intensity={3} />
+<T.DirectionalLight position={[-10, 0, 0]} color="lightblue" intensity={0.5} />
+
 
 <T.PointLight position={[-1, lightHeight, 0]} intensity={lightIntensity} distance={25} decay={2} color={aniColor} castShadow receiveShadow
 on:create={({ref})=>{
