@@ -65,7 +65,7 @@
 		variable = (variable + piDiv10) % twoPi;
 		boxDatas = boxDatas
 		// animate aniColor , smooth transition
-		// aniColor = [Math.sin(variable) * 128 + 128, Math.sin(variable + Math.PI / 2) * 128 + 128, Math.sin(variable + Math.PI) * 128 + 128];
+		aniColor = [Math.sin(variable) * 10 + 10, Math.sin(variable + Math.PI / 2) * 10 + 10, Math.sin(variable + Math.PI) * 10 + 10];
 	});
 
 </script>
@@ -101,7 +101,7 @@ on:create={({ref})=>{
 }}
 />
 
-<T.DirectionalLight position={[0, 10, 0]} angle={0.3} penumbra={0.5} intensity={10} color="skyblue" castShadow receiveShadow />
+<!-- <T.DirectionalLight position={[0, 10, 0]} angle={0.3} penumbra={0.5} intensity={10} color="skyblue" castShadow receiveShadow /> -->
 
 {#if pointLightHelper}
 	<!-- <T.PointLightHelper args={[pointLightHelper, 0.5]} /> -->
