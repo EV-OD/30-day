@@ -41,7 +41,7 @@
 				lightHeight = sinHeight * 2 + 7;
 				lightIntensity  = cosHeight * 5 + 5;
 			}
-			ballPosition = new Vector3(0, cosHeight * 2 + 6, 0);
+			ballPosition = new Vector3(0, cosHeight * 2 +5.2, 0);
 			boxDatas.push({
 				height: sinHeight * 2 + 3,
 				position: new Vector3(i, 0.5, j)
@@ -60,7 +60,7 @@
 				lightHeight = sinHeight * 2 + 7;
 				lightIntensity  = cosHeight * 5 + 5;
 			}
-			ballPosition = new Vector3(0, cosHeight * 2 + 6, 0);
+			ballPosition = new Vector3(0, cosHeight * 2 + 5.2, 0);
 		});
 		variable = (variable + piDiv10) % twoPi;
 		boxDatas = boxDatas
@@ -101,16 +101,19 @@ on:create={({ref})=>{
 }}
 />
 
+<T.DirectionalLight position={[0, 10, 0]} angle={0.3} penumbra={0.5} intensity={10} color="skyblue" castShadow receiveShadow />
+
 {#if pointLightHelper}
 	<!-- <T.PointLightHelper args={[pointLightHelper, 0.5]} /> -->
 {/if}
 
-<T.Mesh position={ballPosition.toArray()}>
-	<T.SphereGeometry args={[0.5, 32, 32]} />
-	<T.MeshStandardMaterial color="red" />
-</T.Mesh>
 
 <!-- Oscillating boxes -->
+	<T.Mesh position={ballPosition.toArray()}>
+		<T.SphereGeometry args={[0.5, 32, 32]} />
+		<T.MeshStandardMaterial color="red" />
+	</T.Mesh>
+
 <T.Group position={[0, 1, 0]}>
 	{#each boxDatas as boxData}
 		<T.Mesh position={boxData.position.toArray()} castShadow receiveShadow>
