@@ -65,15 +65,15 @@
 		variable = (variable + piDiv10) % twoPi;
 		boxDatas = boxDatas
 		// animate aniColor , smooth transition
-		aniColor = [Math.sin(variable) * 128 + 128, Math.sin(variable + Math.PI / 2) * 128 + 128, Math.sin(variable + Math.PI) * 128 + 128];
+		// aniColor = [Math.sin(variable) * 128 + 128, Math.sin(variable + Math.PI / 2) * 128 + 128, Math.sin(variable + Math.PI) * 128 + 128];
 	});
 
 </script>
 
 <T.PerspectiveCamera
 	makeDefault
-	position={[-25, 25, 25]}
-	fov={25}
+	position={[-50, 50, 50]}
+	fov={10}
 >
 	<OrbitControls
 	  enableZoom={false}
