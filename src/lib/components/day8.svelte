@@ -1,12 +1,28 @@
 <script lang="ts">
-  import { T } from '@threlte/core'
+  import { T ,} from '@threlte/core'
   import { ContactShadows, Float, Grid, OrbitControls , Text} from '@threlte/extras'
   import { interactivity ,RoundedBoxGeometry } from '@threlte/extras'
   import { spring } from 'svelte/motion'
 	import mapValue from '../../utils/mapValue';
+  import {
+		BoxGeometry,
+		SphereGeometry,
+		ConeGeometry,
+		CylinderGeometry,
+		TorusGeometry,
+		PlaneGeometry,
+		CircleGeometry,
+		RingGeometry,
+		TetrahedronGeometry,
+		IcosahedronGeometry,
+    Vector3,
+    PerspectiveCamera
+	} from 'three';
+
+	import CustomCamera, {type AnimationOpts} from './cameraComponent/CustomCamera.svelte';
+	import { cubicOut } from 'svelte/easing';
 
 
-  import { BoxGeometry, SphereGeometry, ConeGeometry, CylinderGeometry, TorusGeometry, PlaneGeometry, CircleGeometry, RingGeometry, TetrahedronGeometry, IcosahedronGeometry } from 'three';
 
   let uiWidth = 1;
   let gap = 0.1;
@@ -77,12 +93,38 @@
 
 
   }
-
+	let cameraRef: PerspectiveCamera;
+	let animateCameraPos:((pos: Vector3, options: AnimationOpts) => Promise<void>) | undefined
+	let animateCameraLookAt:((pos: Vector3, options: AnimationOpts) => Promise<void>) | undefined
+	$:{
+		if(animateCameraPos && animateCameraLookAt){
+			runAnimation()
+		}
+	}
+	async function runAnimation(){
+		if(animateCameraPos && animateCameraLookAt){
+			let x = await animateCameraLookAt(new Vector3(0, 0, 0), {delay:500, duration: 1500, easing: cubicOut})
+			animateCameraPos(new Vector3(-14, 14, 14), {duration: 2000,func: function(t:number){
+				if(cameraRef){
+					cameraRef.lookAt(0, 0, 0)
+				}
+				return t
+			}})
+		}
+	}
   
 
 </script>
 
-<T.PerspectiveCamera
+<CustomCamera
+bind:cameraRef 
+cameraPos={new Vector3(-10, 10, -20)}
+cameraLookAt={new Vector3(0, -10, 0)}
+bind:animateCameraPos
+bind:animateCameraLookAt
+/>
+
+<!-- <T.PerspectiveCamera
   makeDefault
   position={[-14, 14, 14]}
   fov={15}
@@ -91,7 +133,7 @@
     enableZoom={false}
     enableDamping
   />
-</T.PerspectiveCamera>
+</T.PerspectiveCamera> -->
 
 
 
@@ -132,6 +174,7 @@
   : $scale3]}
   on:pointerenter={()=>handlePointerEnter(item.id)}
   on:pointerleave={()=>handlePointerLeave(item.id)}
+  on:click
   >
     <T.BoxGeometry args={[uiWidth, 0.3, uiWidth]} />
     <T.MeshStandardMaterial  color={getColor()} />
