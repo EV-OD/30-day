@@ -9,4 +9,5 @@
     + 3. Phong Material
     + 4. Meshline Material
     + 5. Toon Material
-+ Day 6 = bubbling effect
++ Day 8 = Bouncing ball using HTML and CSS
++ Day 7 = bubbling effect
