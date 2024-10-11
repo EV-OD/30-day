@@ -54,4 +54,8 @@ Welcome to the 30-day learning journey. Each day, we will explore different aspe
 - Adding user interaction to 3D scenes
 - Handling mouse events
 
+### **Day 9: Loading Glb Model**
+- Loading and displaying 3D models in glb format
+- Exploring model properties , transformations and animations
+
 Stay tuned for more exciting content as we progress through the 30-day journey!
