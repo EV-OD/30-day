@@ -107,7 +107,7 @@ bind:animateCameraLookAt
 </T.Group>
 
 
-<T.AxesHelper args={[10]} />
+<!-- <T.AxesHelper args={[10]} /> -->
 
 
 
