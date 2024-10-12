@@ -15,7 +15,7 @@
     const x = vertices[i];
     const y = vertices[i + 1];
 
-    vertices[i + 2] = noise(x / 10, y / 10) * 5;
+    vertices[i + 2] = noise(x / 10, y / 10) * 8;
   }
 
   geometry.computeVertexNormals();
@@ -47,17 +47,6 @@
 </T.PerspectiveCamera>
 
 
-<T.AmbientLight intensity={0.5} />
-<T.SpotLight position={[0, 10, 0]} angle={0.3} penumbra={0.5} intensity={20} castShadow />
-<T.DirectionalLight position={[0,0,4]} castShadow receiveShadow />
-
-<T.DirectionalLight position={[10,0,-10]} intensity={3} castShadow receiveShadow />
-<T.DirectionalLight position={[-10,0,-10]} intensity={3} castShadow receiveShadow />
-<T.PointLight position={[0, 10, 0]} intensity={10} distance={25} decay={2} castShadow receiveShadow />
-
-<T.PointLight position={[-1, 4, 0]} intensity={1} distance={25} decay={2} castShadow receiveShadow />
-
-<!-- <T.AxesHelper args={[10]} /> -->
 
 <T.Mesh geometry={geometry} rotation.x={Math.PI / -2} >
   <T.MeshStandardMaterial color="lightblue" />
