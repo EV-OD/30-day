@@ -58,4 +58,9 @@ Welcome to the 30-day learning journey. Each day, we will explore different aspe
 - Loading and displaying 3D models in glb format
 - Exploring model properties , transformations and animations
 
+### **Day 10: Simple GLSL Shader**
+- Introduction to GLSL shaders
+- Creating a simple shader in three.js
+- Created a simple terrain and added shader to it
+
 Stay tuned for more exciting content as we progress through the 30-day journey!
