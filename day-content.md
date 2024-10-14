@@ -63,4 +63,8 @@ Welcome to the 30-day learning journey. Each day, we will explore different aspe
 - Creating a simple shader in three.js
 - Created a simple terrain and added shader to it
 
+### **Day 11: Ripple effect using Vertex Shader**
+- Creating a ripple effect using vertex shader
+- Understanding vertex shader and its usage
+
 Stay tuned for more exciting content as we progress through the 30-day journey!
