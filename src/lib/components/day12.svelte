@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { T, useTask } from '@threlte/core';
+	import { T, useTask, useThrelte } from '@threlte/core';
 	import { OrbitControls } from '@threlte/extras';
 	import { PlaneGeometry, Vector3, Color } from 'three';
 	import { createNoise2D } from 'simplex-noise';
@@ -8,27 +8,22 @@
 	import vertexShader from './day-12/vertex.glsl?raw';
 	import { tweened } from 'svelte/motion';
 	import { quadOut } from 'svelte/easing';
+	import { writable } from 'svelte/store';
 
 	interactivity();
 	const pulsePosition = new Vector3();
-	const pulseTimer = tweened(0, {
-		easing: quadOut
+
+	let time = writable(0);
+	useTask(() => {
+		$time += 0.01;
 	});
 
-	let time = 5;
-	let increaseDirection = 1;
-	useTask((delta) => {
-		time += delta * increaseDirection;
-		if (time > 10) {
-			increaseDirection = -1;
-		} else if (time < 5) {
-			increaseDirection = 1;
-		}
-	});
+
+	let {size} = useThrelte()
 </script>
 
 <T.Group>
-  <T.PerspectiveCamera makeDefault position={[10, 10, 10]} fov={30}>
+  <T.PerspectiveCamera makeDefault position={[0, 0, 200]} fov={40}>
     <OrbitControls autoRotate={false} autoRotateSpeed={1} />
   </T.PerspectiveCamera>
 </T.Group>
@@ -57,35 +52,29 @@
 	receiveShadow
 />
 <T.AmbientLight intensity={0.5} color={'white'} />
+<T.Group position.x={0}>
 <T.Group rotation.x={0}>
-  <T.Mesh
-    on:click={({ point }) => {
-      pulsePosition.set(point.x, point.y, point.z);
-      pulseTimer.set(0, {
-        duration: 0
-      })
-      pulseTimer.set(1, {
-        duration: 3000
-      }).then(()=>{
-        pulseTimer.set(0, {
-          duration: 0
-        })
-      })
-    }}
-  >
-    <T.PlaneGeometry args={[10, 10, 100, 100]} />
-    <T.ShaderMaterial wireframe={true} {fragmentShader} {vertexShader}
-    uniforms={{
-      pulseTimer: {
-        value: 0
-      },
-      pulsePosition: {
-        value: pulsePosition
-      }
-    }}
-    uniforms.pulseTimer.value={$pulseTimer}
+  <T.Mesh>
+    <T.PlaneGeometry args={[100, 100, 10, 10]} />
+    <T.ShaderMaterial wireframe={false} {fragmentShader} {vertexShader}
+	uniforms={{
+		Itime:{
+			type:"f",
+			value: 0
+		}
+	  }}
+	uniforms.Itime.value={$time}
     />
   </T.Mesh>
+</T.Group>
+<!-- <T.Group rotation.x={0} position.x={10}>
+	<T.Mesh>
+	  <T.PlaneGeometry args={[100, 100, 10, 10]} />
+	  <T.ShaderMaterial wireframe={true} {fragmentShader} {vertexShader}
+
+	  />
+	</T.Mesh>
+  </T.Group> -->
 </T.Group>
 
 <!-- <T.AxesHelper args={[10]} /> -->
