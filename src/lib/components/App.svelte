@@ -1,8 +1,8 @@
 <script lang="ts">
   import { Canvas } from '@threlte/core'
-  import Day13 from './day13.svelte'
+  import Day16 from './day16.svelte'
 </script>
 
 <Canvas>
-  <Day13 />
+  <Day16 />
 </Canvas>

@@ -4,8 +4,8 @@
 	import { PlaneGeometry, Vector3, PointLight } from 'three';
 	import { createNoise2D } from 'simplex-noise';
 	import { interactivity } from '@threlte/extras';
-	import fragmentShader from './day-13/fragment.glsl?raw';
-	import vertexShader from './day-13/vertex.glsl?raw';
+	import fragmentShader from './day-14/fragment.glsl?raw';
+	import vertexShader from './day-14/vertex.glsl?raw';
 	import { writable } from 'svelte/store';
 
 	const terrainSize = 100;

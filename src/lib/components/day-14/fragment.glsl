@@ -27,7 +27,11 @@ void main() {
     float distance = length(lightPosition - vPosition);
     float decay = lightIntensity / (distance * distance); // Inverse square law
     
-    vec3 color = lightColor * decay;
+    // Lambertian reflection (diffuse shading): dot product between normal and light direction
+    float lambert = max(dot(normal, lightDir), 0.0);
+
+    // Calculate the final color using the light color, decay, and Lambertian reflection
+    vec3 color = lightColor * lambert * decay;
 
     // Output the color
     gl_FragColor = vec4(color, 1.0);
