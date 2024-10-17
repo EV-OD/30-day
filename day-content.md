@@ -67,4 +67,6 @@ Welcome to the 30-day learning journey. Each day, we will explore different aspe
 - Creating a ripple effect using vertex shader
 - Understanding vertex shader and its usage
 
+### **Day 12: Post Processing**
+
 Stay tuned for more exciting content as we progress through the 30-day journey!
