@@ -106,7 +106,7 @@
             const t = Math.min(elapsedTime / duration, 1);
             const easedT = easing(t);
 
-            if (t <= 1) {
+            if (t < 1) {
                 const newPos = new Vector3().lerpVectors(intialPos, finalPos, easedT);
                 cameraPos = newPos;
                 if (func) func(easedT);

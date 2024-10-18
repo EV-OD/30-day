@@ -2,33 +2,59 @@
   import { T } from '@threlte/core'
   import { ContactShadows, Float, Grid, OrbitControls, HTML } from '@threlte/extras'
 
-  import { BoxGeometry, SphereGeometry, ConeGeometry, CylinderGeometry, TorusGeometry, PlaneGeometry, CircleGeometry, RingGeometry, TetrahedronGeometry, IcosahedronGeometry } from 'three';
+  import { Vector3,PerspectiveCamera } from 'three';
   import Mockup from './day-16/mockup.svelte';
   import Toycar from "./models/scene.svelte"
-	import { tweened } from 'svelte/motion';
-	import { linear, quadOut } from 'svelte/easing';
+	import { spring, tweened } from 'svelte/motion';
+	import { cubicIn, cubicInOut, cubicOut, linear, quadOut } from 'svelte/easing';
+  import CustomCamera, {type AnimationOpts} from './cameraComponent/CustomCamera.svelte';
   let shouldStop = true;
   let carPosZ = tweened(0);
+
+  let uiScale = spring(0, {
+    stiffness: 0.15,
+    damping: 0.25
+  });
+
+  let cameraRef: PerspectiveCamera;
+	let animateCameraPos:((pos: Vector3, options: AnimationOpts) => Promise<void>) | undefined
+	let animateCameraLookAt:((pos: Vector3, options: AnimationOpts) => Promise<void>) | undefined
+	$:{
+		if(animateCameraPos && animateCameraLookAt){
+			runAnimation()
+		}
+	}
+	async function runAnimation(){
+		if(animateCameraPos && animateCameraLookAt){
+			animateCameraPos(new Vector3(-20, 7, 14), {delay:1000,duration: 1500,easing: cubicOut,func: function(t:number){
+				if(cameraRef){
+					cameraRef.lookAt(0, 0, 0)
+				}
+				return t
+			}}).then(()=>{
+        console.log("done")
+        $uiScale = 0.2;
+      })
+		}
+	}
 
 
 </script>
 
-<T.PerspectiveCamera
-  makeDefault
-  position={[-20, 7, 14]}
-  fov={10}
->
-  <OrbitControls
-    enableZoom={false}
-    enableDamping
-  />
-</T.PerspectiveCamera>
+<CustomCamera 
+bind:cameraRef 
+cameraPos={new Vector3(-10,10,-40)}
+cameraLookAt={new Vector3(0, 0, 0)}
+bind:animateCameraPos
+bind:animateCameraLookAt
+/>
+
 
 <T.Group position={[0,0, $carPosZ]} scale={0.2} >
   <Toycar bind:shouldStop={shouldStop}/>
 </T.Group>
 
-<HTML transform scale={0.2} rotation.y={Math.PI / -3} position={[3,0.5,0.2]}>
+<HTML transform scale={$uiScale} rotation.y={Math.PI / -3} position={[3,0.5,0.2]}>
     <Mockup/>
 </HTML>
 
