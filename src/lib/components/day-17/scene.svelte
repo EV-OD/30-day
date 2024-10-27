@@ -35,7 +35,7 @@
 	}
 
 	let height = spring(1, { stiffness: 0.15, damping: 0.25 });
-    let radius = spring(0.5, { stiffness: 0.1, damping: 0.3 });
+    let radius = spring(0.5, { stiffness: 0.1, damping: 0.4 });
 	let isFirstContact = false;
 </script>
 

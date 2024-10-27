@@ -4,6 +4,10 @@
 
 </script>
 
-<World>
+<World
+on:ready={() => {
+    console.log('World ready');
+}}
+>
     <Scene/>
 </World>
