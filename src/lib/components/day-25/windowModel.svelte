@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { T } from "@threlte/core";
 
-    let windowWidth = 1;
-    let windowHeight = 1;
-    let windowDepth = 0.1;
+    export let windowWidth = 1;
+    export let windowHeight = 1;
+    export let windowDepth = 0.1;
 
-    let glassDepth = 0.001;
+    export let glassDepth = 0.001;
 
-    let innerOffset = 0.1;
+    export let innerOffset = 0.1;
 
-    let frameColor = "rgb(100,50,0)";
-    let glassColor = "rgb(173, 216, 230)";
+    export let frameColor = "rgb(100,50,0)";
+    export let glassColor = "rgb(173, 216, 230)";
 
 
 </script>
@@ -43,7 +43,7 @@
     </T.Mesh>
 
     <!-- glass -->
-    <T.Mesh position={[0,0,windowDepth / 2]}>
+    <T.Mesh position={[0,0,0]}>
         <T.BoxGeometry args={[windowWidth - innerOffset,windowHeight - innerOffset,glassDepth]}/>
         <T.MeshStandardMaterial color={glassColor} />
     </T.Mesh>
