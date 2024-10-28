@@ -21,10 +21,8 @@
                 <T.SphereGeometry args={[0.08, 32, 32]} />
                 <T.MeshStandardMaterial emissive="rgb(100,100,250)" emissiveIntensity={10} toneMapped={false} />
             </T.Mesh>
-            <T.Group
-            position={[0, -0.7, -0.15]}
-            >
             <CustomPointLight
+            position={[0, -0.1, 0]}
                 intensity={1}
                 distance={0}
                 decay={2}
@@ -32,7 +30,6 @@
                 receiveShadow
                 isHelperVisible={false}
             />
-            </T.Group>
         </T.Group>
     </T.Group>
 

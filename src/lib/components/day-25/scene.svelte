@@ -6,6 +6,7 @@
 	import Wall from './wall.svelte';
 	import WallLamp from './wallLamp.svelte';
 	import CustomPointLight from './customPointLight.svelte';
+	import Table from './table.svelte';
 
 	let width = 4;
 	let height = 2;
@@ -26,18 +27,23 @@
 
 <T.DirectionalLight position={[10, 0, -10]} intensity={1} castShadow receiveShadow />
 <T.DirectionalLight position={[-10, 0, -10]} intensity={3} castShadow receiveShadow />
-<!-- <T.DirectionalLight position={[10, 0, 10]} intensity={4} castShadow receiveShadow /> -->
+<T.DirectionalLight position={[10, 0, 10]} intensity={2} castShadow receiveShadow />
 
 
 
 
 
 
-<T.AxesHelper args={[5]} />
+<!-- <T.AxesHelper args={[5]} /> -->
 
 <T.Group position.y={height / 2 }>
+	<T.Group position={[-1.5,-0.15,-1]} rotation.y={Math.PI / 2}>
+		<WallLamp/>
+	</T.Group>
 
-    <WallLamp/>
+	<T.Group position={[-0.8,-0.3,-0.7]}>
+		<Table/>
+	</T.Group>
 	<!-- floor -->
 	<T.Mesh position.y={height / -2}>
 		<T.BoxGeometry args={[width, offset, depth]} />

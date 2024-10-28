@@ -14,6 +14,6 @@ on:create={({ref})=>{
 
 {#if isHelperVisible}
 {#if pointLightRef}
-	<T.PointLightHelper args={[pointLightRef,0.1, color]} />
+	<T.PointLightHelper args={[pointLightRef,0.3, color]} />
 {/if}
 {/if}
