@@ -18,33 +18,33 @@
 
 <T.Group>
     <!-- top frame -->
-    <T.Mesh position={[0,windowWidth / 2,0]}>
+    <T.Mesh position={[0,windowWidth / 2,0]}  castShadow receiveShadow>
         <T.BoxGeometry args={[windowWidth,innerOffset,windowDepth]}/>
         <T.MeshStandardMaterial color={frameColor} />
     </T.Mesh>
 
     <!-- left frame -->
-    <T.Mesh position={[-windowWidth / 2,0,0]}>
+    <T.Mesh position={[-windowWidth / 2,0,0]}  castShadow receiveShadow>
         <T.BoxGeometry args={[innerOffset,windowHeight + innerOffset,windowDepth]}/>
         <T.MeshStandardMaterial color={frameColor} />
     </T.Mesh>
 
 
     <!-- right frame -->
-    <T.Mesh position={[windowWidth / 2,0,0]}>
+    <T.Mesh position={[windowWidth / 2,0,0]}  castShadow receiveShadow>
         <T.BoxGeometry args={[innerOffset,windowHeight + innerOffset,windowDepth]}/>
         <T.MeshStandardMaterial color={frameColor} />
     </T.Mesh>
 
     <!-- bottom frame -->
-    <T.Mesh position={[0,-windowWidth / 2,0]}>
+    <T.Mesh position={[0,-windowWidth / 2,0]}  castShadow receiveShadow>
         <T.BoxGeometry args={[windowWidth,innerOffset,windowDepth]}/>
         <T.MeshStandardMaterial color={frameColor} />
     </T.Mesh>
 
     <!-- glass -->
-    <T.Mesh position={[0,0,0]}>
+    <T.Mesh position={[0,0,0]}  castShadow>
         <T.BoxGeometry args={[windowWidth - innerOffset,windowHeight - innerOffset,glassDepth]}/>
-        <T.MeshStandardMaterial color={glassColor} />
+        <T.MeshStandardMaterial color={glassColor} transparent={true} opacity={0.5} />
     </T.Mesh>
 </T.Group>
