@@ -6,5 +6,5 @@
 
 <Canvas>
   <Day25 />
-  <Renderer/>
+  <!-- <Renderer/> -->
 </Canvas>

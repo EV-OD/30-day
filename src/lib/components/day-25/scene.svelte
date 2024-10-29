@@ -7,6 +7,7 @@
 	import WallLamp from './wallLamp.svelte';
 	import CustomPointLight from './customPointLight.svelte';
 	import Table from './table.svelte';
+	import Clock from './clock.svelte';
 
 	let width = 4;
 	let height = 2;
@@ -17,8 +18,8 @@
 	let windowHeight = 1;
 </script>
 
-<T.PerspectiveCamera makeDefault position={[14, 14, 14]} fov={15}>
-	<OrbitControls enableZoom={false} enableDamping />
+<T.PerspectiveCamera makeDefault position={[14,14,14]} fov={15}>
+	<OrbitControls enableZoom={true} enableDamping target.y={height / 2} />
 </T.PerspectiveCamera>
 
 <T.AmbientLight intensity={0.1} />
@@ -37,6 +38,9 @@
 <!-- <T.AxesHelper args={[5]} /> -->
 
 <T.Group position.y={height / 2 }>
+	<T.Group position={[-0.5,-0.13,-0.8]} scale={0.5}>
+		<Clock/>
+	</T.Group>
 	<T.Group position={[-1.5,-0.15,-1]} rotation.y={Math.PI / 2}>
 		<WallLamp/>
 	</T.Group>
