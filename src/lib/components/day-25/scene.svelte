@@ -10,6 +10,7 @@
 	import Clock from './clock.svelte';
 	import Book from './book.svelte';
 	import Pen from './pen.svelte';
+	import Bed from './bed.svelte';
 
 	let width = 4;
 	let height = 2;
@@ -30,7 +31,7 @@
 
 <T.DirectionalLight position={[10, 0, -10]} intensity={1} castShadow receiveShadow />
 <T.DirectionalLight position={[-10, 0, -10]} intensity={3} castShadow receiveShadow />
-<T.DirectionalLight position={[10, 0, 10]} intensity={2} castShadow receiveShadow />
+<!-- <T.DirectionalLight position={[10, 0, 10]} intensity={2} castShadow receiveShadow /> -->
 
 
 
@@ -48,6 +49,10 @@
 		<Pen/>
 	</T.Group>
 
+	<T.Group position={[-0.5,-0.55,0.3]}>
+		<Bed/>
+	</T.Group>
+
 	<!-- book group -->
 	 <T.Group position={[0,-0.1,0]}>
 		<T.Group position={[-0.9,-0.13,-0.8]} scale={0.3} rotation.x={Math.PI / 2}>
@@ -63,6 +68,9 @@
 
 
 	<T.Group position={[-1.5,-0.15,-1]} rotation.y={Math.PI / 2}>
+		<WallLamp/>
+	</T.Group>
+	<T.Group position={[-1.6,-0.15,1]} rotation.y={Math.PI / 2}>
 		<WallLamp/>
 	</T.Group>
 

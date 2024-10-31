@@ -34,7 +34,7 @@
     </T.Group>
 
     <!-- stand -->
-    <T.Mesh>
+    <T.Mesh castShadow receiveShadow>
         <T.BoxGeometry args={[0.05,1.5,0.05]} />
         <T.MeshStandardMaterial color="white" />
     </T.Mesh>
