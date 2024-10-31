@@ -9,6 +9,7 @@
 	import Table from './table.svelte';
 	import Clock from './clock.svelte';
 	import Book from './book.svelte';
+	import Pen from './pen.svelte';
 
 	let width = 4;
 	let height = 2;
@@ -41,6 +42,10 @@
 <T.Group position.y={height / 2 }>
 	<T.Group position={[-0.5,-0.13,-0.8]} scale={0.5}>
 		<Clock/>
+	</T.Group>
+
+	<T.Group scale={0.1} position={[-0.7,-0.24,-0.7]} rotation.x={Math.PI / 2} rotation.z={Math.PI / 6}>
+		<Pen/>
 	</T.Group>
 
 	<!-- book group -->
