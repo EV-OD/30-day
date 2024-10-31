@@ -8,6 +8,7 @@
 	import CustomPointLight from './customPointLight.svelte';
 	import Table from './table.svelte';
 	import Clock from './clock.svelte';
+	import Book from './book.svelte';
 
 	let width = 4;
 	let height = 2;
@@ -41,6 +42,21 @@
 	<T.Group position={[-0.5,-0.13,-0.8]} scale={0.5}>
 		<Clock/>
 	</T.Group>
+
+	<!-- book group -->
+	 <T.Group position={[0,-0.1,0]}>
+		<T.Group position={[-0.9,-0.13,-0.8]} scale={0.3} rotation.x={Math.PI / 2}>
+			<Book/>
+		</T.Group>
+		<T.Group position={[-0.95,-0.1,-0.8]} scale={0.3} rotation.x={Math.PI / 2} rotation.z={Math.PI / 6}>
+			<Book coverColor="rgb(100,50,50)" />
+		</T.Group>
+		<T.Group position={[-0.95,-0.07,-0.8]} scale={0.3} rotation.x={Math.PI / 2} rotation.z={Math.PI / 5}>
+			<Book coverColor="rgb(100,100,50)" />
+		</T.Group>
+	 </T.Group>
+
+
 	<T.Group position={[-1.5,-0.15,-1]} rotation.y={Math.PI / 2}>
 		<WallLamp/>
 	</T.Group>
@@ -49,7 +65,10 @@
 		<Table/>
 	</T.Group>
 	<!-- floor -->
-	<T.Mesh position.y={height / -2}>
+	<T.Mesh position.y={height / -2}
+	castShadow
+	receiveShadow
+	>
 		<T.BoxGeometry args={[width, offset, depth]} />
 		<T.MeshStandardMaterial color="orange" />
 	</T.Mesh>
