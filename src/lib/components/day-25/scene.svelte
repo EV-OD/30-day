@@ -72,7 +72,7 @@
 			<Book />
 		</T.Group>
 		<T.Group
-			position={[-0.95, -0.1, -0.8]}
+			position={[-0.95, -0.09, -0.8]}
 			scale={0.3}
 			rotation.x={Math.PI / 2}
 			rotation.z={Math.PI / 6}
@@ -80,7 +80,7 @@
 			<Book coverColor="rgb(100,50,50)" />
 		</T.Group>
 		<T.Group
-			position={[-0.95, -0.07, -0.8]}
+			position={[-0.95, -0.05, -0.8]}
 			scale={0.3}
 			rotation.x={Math.PI / 2}
 			rotation.z={Math.PI / 5}
