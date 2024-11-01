@@ -35,12 +35,12 @@
 		</T.Mesh>
 
         <!-- bed cover -->
-        <T.Mesh position={[0.51, 0.11, 0.01 + bedTopDepth / 2]} castShadow receiveShadow>
-			<RoundedBoxGeometry args={[bedTopWidth / 2, bedTopDepth, bedTopHeight]} />
+        <T.Mesh position={[0.51, 0.11, bedTopDepth / 2]} castShadow receiveShadow>
+			<RoundedBoxGeometry args={[bedTopWidth / 2, bedTopDepth, bedTopHeight + 0.02]} />
 			<T.MeshStandardMaterial color={"red"} />
 		</T.Mesh>
-        <T.Mesh position={[0.51, -0.1, 0.01 + bedTopDepth / 2]} castShadow receiveShadow>
-			<RoundedBoxGeometry args={[0.01 + bedTopWidth / 2, totalBedHeight - bedTopDepth, bedTopHeight + 0.01]} />
+        <T.Mesh position={[0.51, -0.1, bedTopDepth / 2]} castShadow receiveShadow>
+			<RoundedBoxGeometry args={[0.01 + bedTopWidth / 2, totalBedHeight - bedTopDepth, bedTopHeight + 0.04]} />
 			<T.MeshStandardMaterial color={"red"} />
 		</T.Mesh>
 
