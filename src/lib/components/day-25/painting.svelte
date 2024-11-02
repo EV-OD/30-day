@@ -12,6 +12,8 @@ import {T} from "@threlte/core"
 
     export let isPaintingHovered = false;
     
+    export let focusPainting:()=>void;
+    
     let scale = spring(1);
     let meshRef:Mesh;
 
@@ -20,7 +22,7 @@ import {T} from "@threlte/core"
 <T.Group>
     {#await map then value}
     {#if isPaintingHovered}
-        <OutlineRenderer selectedMesh={meshRef} />
+        <!-- <OutlineRenderer selectedMesh={meshRef} /> -->
     {/if}
         <T.Mesh castShadow receiveShadow
         scale={$scale}
@@ -34,6 +36,9 @@ import {T} from "@threlte/core"
             isPaintingHovered = false
         }}
         on:click={()=>{
+            if(focusPainting){
+                focusPainting()
+            }
         }}
         >
             <T.BoxGeometry args={[0.8,0.6,0.04]} />

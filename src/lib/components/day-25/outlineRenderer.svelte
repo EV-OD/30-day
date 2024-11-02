@@ -43,6 +43,7 @@
       let before = autoRender.current
       autoRender.set(false)
       return () => {
+        composer.removeAllPasses()
         autoRender.set(before)
       }
     })

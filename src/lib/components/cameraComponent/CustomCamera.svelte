@@ -1,32 +1,32 @@
 <script context="module" lang="ts">
-    export type AnimationOpts = {
-        duration: number;
-        delay?: number;
-        easing?: ((t: number) => number) | undefined;
-        func?: ((t: number) => number) | undefined;
-    };
+	export type AnimationOpts = {
+		duration: number;
+		delay?: number;
+		easing?: ((t: number) => number) | undefined;
+		func?: ((t: number, cameraPos: Vector3) => number) | undefined;
+	};
 
-    export type AnimationPosStore = {
-        isAnimating: boolean;
-        duration: number;
-        delay: number;
-        easing: (t: number) => number;
-        intialPos: Vector3;
-        finalPos: Vector3;
-        func: ((t: number) => number) | undefined;
-        resolve?: () => void;
-    };
+	export type AnimationPosStore = {
+		isAnimating: boolean;
+		duration: number;
+		delay: number;
+		easing: (t: number) => number;
+		intialPos: Vector3;
+		finalPos: Vector3;
+		func: ((t: number, cameraPos: Vector3) => number) | undefined;
+		resolve?: () => void;
+	};
 
-    export type AnimationLookAtStore = {
-        isAnimating: boolean;
-        duration: number;
-        delay: number;
-        easing: (t: number) => number;
-        intialLookAt: Vector3;
-        finalLookAt: Vector3;
-        func: ((t: number) => number) | undefined;
-        resolve?: () => void;
-    };
+	export type AnimationLookAtStore = {
+		isAnimating: boolean;
+		duration: number;
+		delay: number;
+		easing: (t: number) => number;
+		intialLookAt: Vector3;
+		finalLookAt: Vector3;
+		func: ((t: number, cameraLookAt: Vector3) => number) | undefined;
+		resolve?: () => void;
+	};
 </script>
 
 <script lang="ts">
@@ -106,10 +106,10 @@
             const t = Math.min(elapsedTime / duration, 1);
             const easedT = easing(t);
 
-            if (t < 1) {
+            if (t <= 1) {
                 const newPos = new Vector3().lerpVectors(intialPos, finalPos, easedT);
                 cameraPos = newPos;
-                if (func) func(easedT);
+                if (func) func(easedT, cameraPos);
             } else {
                 cameraPos = finalPos.clone();
                 isPosAnimation.isAnimating = false;
@@ -137,7 +137,7 @@
                 cameraRef.lookAt(newLookAt);
                 console.table({ newLookAt, intialLookAt, finalLookAt, easedT });
                 
-                if (func) func(easedT);
+                if (func) func(easedT, cameraLookAt);
             } else {
                 console.table({ finalLookAt });
                 cameraRef.lookAt(finalLookAt.clone());

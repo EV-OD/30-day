@@ -29,7 +29,7 @@
 <T.Group scale={$scale}>
     <!-- front cover -->
     {#if isBookHovered}
-    <OutlineRenderer selectedMesh={meshRef} />
+    <!-- <OutlineRenderer selectedMesh={meshRef} /> -->
     {/if}
      <T.Mesh position={[0,0, bookDepth / 2]}
      castShadow
